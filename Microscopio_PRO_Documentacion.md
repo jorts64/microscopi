@@ -46,7 +46,7 @@ sudo apt install python3-opencv python3-numpy v4l-utils
 ## ▶️ Ejecución
 
 ```bash
-python3 microscopio_pro_menu_final_v3.py
+python3 microscopio.py
 ```
 
 El script debe ejecutarse desde una **terminal**, ya que algunas acciones solicitan entrada por consola.
