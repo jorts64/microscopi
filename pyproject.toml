@@ -1,0 +1,16 @@
+[project]
+name = "microscopi"
+version = "0.1.0"
+description = "Microscope measurement tool for UVC devices"
+authors = [
+  { name = "Jordi Orts" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "opencv-python"
+]
+
+[project.scripts]
+microscopi = "microscopi.app:main"

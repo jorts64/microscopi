@@ -1,0 +1,100 @@
+# Catalan translations for PACKAGE package.
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Jordi Orts <jorts64@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-11 18:03+0100\n"
+"PO-Revision-Date: 2026-02-09 07:49+0100\n"
+"Last-Translator: Jordi Orts <jorts64@gmail.com>\n"
+"Language-Team: Catalan <ca@dodds.net>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: microscopi/app.py:174
+msgid "Calibrated:"
+msgstr "Calibrat"
+
+#: microscopi/app.py:208 microscopi/app.py:226
+msgid "Measure added"
+msgstr "Mesura afegida"
+
+#: microscopi/app.py:236
+#, fuzzy
+msgid "PNG saved"
+msgstr "Imatge desada"
+
+#: microscopi/app.py:240
+msgid "Origin not defined"
+msgstr "Origen no definit"
+
+#: microscopi/app.py:301
+msgid "Export saved"
+msgstr "Exportació desada"
+
+#: microscopi/app.py:440
+#, fuzzy
+msgid "Calibration"
+msgstr "Unitat de calibració"
+
+#: microscopi/app.py:440
+msgid "Enter real distance"
+msgstr "Introdueix distància real"
+
+#: microscopi/app.py:445 microscopi/app.py:659
+msgid "Invalid number"
+msgstr "Nombre invàlid"
+
+#: microscopi/app.py:447
+msgid "Select two points first"
+msgstr "Primer selecciona dos punts"
+
+#: microscopi/app.py:451
+msgid "Precision:"
+msgstr "Precisió"
+
+#: microscopi/app.py:460
+msgid "New measure"
+msgstr "Nova mesura"
+
+#: microscopi/app.py:460
+msgid "Enter label"
+msgstr "Introdueix etiqueta"
+
+#: microscopi/app.py:464
+msgid "Select required points first"
+msgstr "Selecciona primer els punts necessaris"
+
+#: microscopi/app.py:485
+msgid "Origin set"
+msgstr "Fixat origen"
+
+#: microscopi/app.py:488
+msgid "Select a point in XY mode first"
+msgstr "Primer selecciona un punt al mode XY"
+
+#: microscopi/app.py:506
+msgid "Point selected"
+msgstr "Punt seleccionat"
+
+#: microscopi/app.py:525
+msgid "Error: Cannot open video device"
+msgstr "Error: no es pot obrir el dispositiu de vídeo"
+
+#: microscopi/app.py:539
+msgid "Error: Cannot read from video device"
+msgstr "Error: No es pot llegir el dispositiu de vídeo"
+
+#: microscopi/app.py:697
+msgid "Display unit:"
+msgstr "Unitat de visualització"
+
+#: microscopi/app.py:703
+msgid "Calibration unit:"
+msgstr "Unitat de calibració"
