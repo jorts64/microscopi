@@ -1,9 +1,21 @@
 # microscopi/utils.py
 
 import math
+import cv2
+from .constants import MM_PER_INCH
 
-MM_PER_INCH = 25.4
+FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
+try:
+    ft = cv2.freetype.createFreeType2()
+    ft.loadFontData(FONT_PATH, 0)
+except Exception:
+    raise RuntimeError(
+        "Microscopi requires OpenCV built with FreeType support"
+    )
+
+def draw_text(img, text, pos, size, color):
+    ft.putText(img, text, pos, size, color, -1, cv2.LINE_AA, True)
 
 def px_to_mm(state, px):
     if state.scale_mm_per_pixel is None:

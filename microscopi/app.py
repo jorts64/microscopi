@@ -10,48 +10,20 @@ import csv
 from microscopi.config import Config
 from microscopi.i18n import _
 from microscopi.state import AppState
-from microscopi.utils import px_to_mm, format_mm, current_measure_text
+from microscopi.utils import px_to_mm, format_mm, current_measure_text, draw_text
+from .constants import (
+    LEFT_MENU_W,
+    RIGHT_PANEL_W,
+    BOTTOM_PANEL_H,
+    MM_PER_INCH,
+    VERSION,
+    COLOR_MAP,
+    BUTTONS,
+)
+from .ui import draw_menu, draw_measures, draw_bottom_panel, hit_menu
 
 # ================= CONSTANTES =================
-LEFT_MENU_W = 120
-RIGHT_PANEL_W = 300
-BOTTOM_PANEL_H = 60
-MM_PER_INCH = 25.4
-VERSION = "0.10.0-dev"
 WINDOW_NAME = f"Microscopi {VERSION}"
-
-# ---- CAMBIO ÚNICO: FreeType para UTF-8 ----
-FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-try:
-    ft = cv2.freetype.createFreeType2()
-    ft.loadFontData(FONT_PATH, 0)
-except Exception:
-    raise RuntimeError(
-        "Microscopi requires OpenCV built with FreeType support"
-    )
-
-def draw_text(img, text, pos, size, color):
-    ft.putText(img, text, pos, size, color, -1, cv2.LINE_AA, True)
-# --------------------------------------------
-# ==============================================
-
-COLOR_MAP = {
-    "RED": (0, 0, 255),
-    "GRN": (0, 255, 0),
-    "BLU": (255, 0, 0),
-    "YEL": (0, 255, 255),
-}
-
-BUTTONS = [
-    "ROT",
-    "CAL", "XY", "DIS", "RAD", "SQR",
-    "ADD", "UNDO",
-    "RED", "GRN", "BLU", "YEL",
-    "0.0", "0.00", "0.000",
-    "GRY",
-    "PNG", "(0,0)", "3D", "PCB",
-    "QUIT",
-]
 
 # ================= ARGPARSE =================
 
@@ -226,119 +198,6 @@ def save_export(state, mode):
 
     save_png(state)
     state.status_message = _("Export saved")
-
-
-# ================= UI =================
-
-def draw_menu(canvas, state):
-    for i, txt in enumerate(BUTTONS):
-        y = 20 + i * 38
-        color = (70, 70, 70)
-        text_size = 20
-        border_thickness = 0
-
-        if txt == state.mode:
-            color = (0, 160, 0)          # verde más brillante
-            text_size = 24              # texto más grande
-            border_thickness = 3        # borde visible
-
-        if txt == state.measure_color_name:
-            color = (120, 120, 0)
-
-        # Fondo
-        cv2.rectangle(canvas,
-                      (10, y),
-                      (LEFT_MENU_W - 10, y + 28),
-                      color,
-                      -1)
-
-        # Borde si activo
-        if border_thickness:
-            cv2.rectangle(canvas,
-                          (10, y),
-                          (LEFT_MENU_W - 10, y + 28),
-                          (255, 255, 255),
-                          border_thickness)
-
-        # Texto
-        # Si es botón de color → dibujar muestra de color
-        if txt in COLOR_MAP:
-            sample_color = COLOR_MAP[txt]
-
-            # Rectángulo de muestra
-            cv2.rectangle(canvas,
-                          (20, y + 5),
-                          (LEFT_MENU_W - 20, y + 23),
-                          sample_color,
-                          -1)
-
-            # Borde si es color activo
-            if state.measure_color == sample_color:
-                cv2.rectangle(canvas,
-                              (20, y + 5),
-                              (LEFT_MENU_W - 20, y + 23),
-                              (255, 255, 255),
-                              3)
-        else:
-            # Texto normal para el resto de botones
-            draw_text(canvas, txt,
-                      (18, y + 22),
-                      text_size,
-                      (255, 255, 255))
-
-def draw_measures(canvas, state):
-    x = canvas.shape[1] - RIGHT_PANEL_W + 10
-    y = 30
-
-    for idx, m in enumerate(state.measurements[-14:]):
-        # Checkbox
-        box_x = x
-        box_y = y - 14
-
-        cv2.rectangle(canvas,
-                      (box_x, box_y),
-                      (box_x + 14, box_y + 14),
-                      (255, 255, 255),
-                      2)
-
-        if m["visible"]:
-            cv2.line(canvas,
-                     (box_x + 3, box_y + 7),
-                     (box_x + 6, box_y + 11),
-                     (255, 255, 255), 2)
-            cv2.line(canvas,
-                     (box_x + 6, box_y + 11),
-                     (box_x + 11, box_y + 3),
-                     (255, 255, 255), 2)
-
-        txt = f"{m['type']} {m['label']} {m['text']}"
-        draw_text(canvas, txt, (x + 20, y), 18, m["color"])
-
-        y += 22
-
-def draw_bottom_panel(canvas, state):
-    h = canvas.shape[0]
-    y = h - BOTTOM_PANEL_H + 25
-
-    draw_text(canvas, state.status_message,
-              (LEFT_MENU_W + 10, y), 20, (255, 255, 255))
-
-    draw_text(canvas,
-              f"v{VERSION}",
-              (canvas.shape[1] - 140, h - BOTTOM_PANEL_H + 25),
-              18,
-              (180, 180, 180))
-
-    if state.input_mode:
-        draw_text(canvas, "> " + state.input_buffer,
-                  (LEFT_MENU_W + 10, y + 28), 20, (0, 255, 255))
-
-def hit_menu(x, y):
-    for i, txt in enumerate(BUTTONS):
-        by = 20 + i * 38
-        if 10 <= x <= LEFT_MENU_W - 10 and by <= y <= by + 28:
-            return txt
-    return None
 
 # ================= MOUSE =================
 
