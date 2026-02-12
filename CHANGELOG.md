@@ -6,6 +6,14 @@ The format is inspired by Keep a Changelog and follows semantic
 versioning principles.
 
 ------------------------------------------------------------------------
+## \[0.11.1\] - 2026-02-12
+
+- Correct geometric rotation handling
+- Fixed preview alignment under rotation
+- Gray mode affects only image, not overlays
+- Added keyboard shortcuts for modes and actions
+- Added device and resolution saved in .config file
+
 ## \[0.11.0\] - 2026-02-12
 
 ### Refactor improvement

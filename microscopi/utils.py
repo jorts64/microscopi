@@ -63,3 +63,42 @@ def current_measure_text(state):
         return f"{w:.1f}px x {h:.1f}px"
 
     return None
+
+def to_base_coords(x, y, base_width, base_height, rotation):
+
+    if rotation == 0:
+        return x, y
+
+    if rotation == 90:
+        xb = y
+        yb = base_height - 1 - x
+        return xb, yb
+
+    if rotation == 180:
+        xb = base_width - 1 - x
+        yb = base_height - 1 - y
+        return xb, yb
+
+    if rotation == 270:
+        xb = base_width - 1 - y
+        yb = x
+        return xb, yb
+
+    return x, y
+
+def to_visual_coords(x, y, base_width, base_height, rotation):
+
+    if rotation == 0:
+        return x, y
+
+    if rotation == 90:
+        # ROTATE_90_CLOCKWISE
+        return base_height - 1 - y, x
+
+    if rotation == 180:
+        return base_width - 1 - x, base_height - 1 - y
+
+    if rotation == 270:
+        return y, base_width - 1 - x
+
+    return x, y

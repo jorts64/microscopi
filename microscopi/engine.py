@@ -1,4 +1,4 @@
-from .actions import calibrate_with_value, add_measure_with_label
+from .actions import calibrate_with_value, add_measure_with_label, undo_measure
 from .i18n import _
 
 
@@ -90,6 +90,44 @@ def handle_key(state, key):
         )
 
         state.status_message = _("Calibration unit:") + " " + state.calibration_unit
+        return True
+
+    # ===============================
+    # ATAJOS
+    # ===============================
+
+    if key == ord('r'):
+        state.rotation = (state.rotation + 90) % 360
+        state.status_message = _("Rotation:") + f" {state.rotation}°"
+        return True
+
+    if key == ord('d'):
+        state.mode = "DIS"
+        state.status_message = "Mode: DIS"
+        return True
+
+    if key == ord('c'):
+        state.mode = "RAD"
+        state.status_message = "Mode: RAD"
+        return True
+
+    if key == ord('s'):
+        state.mode = "SQR"
+        state.status_message = "Mode: SQR"
+        return True
+
+    if key == ord('x'):
+        state.mode = "XY"
+        state.status_message = "Mode: XY"
+        return True
+
+    if key == ord('g'):
+        state.gray = not state.gray
+        state.status_message = "Gray mode" if state.gray else "Color mode"
+        return True
+
+    if key == ord('z'):
+        undo_measure(state)
         return True
 
 

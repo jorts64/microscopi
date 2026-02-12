@@ -1,4 +1,14 @@
-microscopi (0.11.0-1) UNRELEASED; urgency=medium
+microscopi (0.11.1-1) UNRELEASED; urgency=medium
+
+  * Fix: correct rotation geometry (base/visual transform)
+  * Fix: preview alignment under rotation
+  * Fix: gray mode applies only to image
+  * UX: keyboard shortcuts (D,C,S,X,R,G,Z)
+  * Save device and resolution options in .config file
+
+ -- Jordi Orts <jorts64@users.noreply.github.com>  Thu, 12 Feb 2026 23:37:27 +0100
+
+microscopi (0.11.0-1) unstable; urgency=medium
 
   * Development version.
   * Refactor: video encapsulated in VideoSource.
@@ -7,6 +17,7 @@ microscopi (0.11.0-1) UNRELEASED; urgency=medium
   * Refactor: clean main loop.
 
  -- Jordi Orts <jorts64@users.noreply.github.com>  Thu, 12 Feb 2026 16:36:38 +0100
+
 
 microscopi (0.10.0-1) unstable; urgency=medium
 

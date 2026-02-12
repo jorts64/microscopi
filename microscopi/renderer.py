@@ -7,6 +7,8 @@ from .constants import (
     BOTTOM_PANEL_H,
 )
 from .ui import draw_menu, draw_measures, draw_bottom_panel
+from .preview import draw_preview
+from .utils import to_visual_coords
 
 
 def _apply_rotation(frame, state):
@@ -20,11 +22,19 @@ def _apply_rotation(frame, state):
 
 
 def _draw_saved_measures(frame, state):
+
+    base_w = state.base_width
+    base_h = state.base_height
+
     for m in state.measurements:
         if not m.get("visible", False):
             continue
 
         (x1, y1), (x2, y2) = m["points"]
+
+        x1, y1 = to_visual_coords(x1, y1, base_w, base_h, state.rotation)
+        x2, y2 = to_visual_coords(x2, y2, base_w, base_h, state.rotation)
+
 
         if m["type"] == "DIS":
             cv2.line(frame, (x1, y1), (x2, y2), m["color"], 2)
@@ -82,14 +92,34 @@ def _draw_cursor(canvas, state):
         cv2.line(canvas, (cx - size, cy), (cx + size, cy), (200, 200, 200), 1)
         cv2.line(canvas, (cx, cy - size), (cx, cy + size), (200, 200, 200), 1)
 
+def _transform_point(x, y, width, height, rotation):
+
+    if rotation == 0:
+        return x, y
+
+    if rotation == 90:
+        return height - y, x
+
+    if rotation == 180:
+        return width - x, height - y
+
+    if rotation == 270:
+        return y, width - x
+
+    return x, y
 
 def render(frame, state):
+
     frame = _apply_rotation(frame, state)
-    _draw_saved_measures(frame, state)
-    _draw_origin(frame, state)
+
     frame = _apply_gray(frame, state)
 
+    _draw_saved_measures(frame, state)
+
+    draw_preview(frame, state)
+
     canvas = _build_canvas(frame, state)
+
     _draw_cursor(canvas, state)
 
     return canvas

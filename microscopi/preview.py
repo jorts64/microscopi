@@ -3,9 +3,13 @@ import math
 
 from .constants import LEFT_MENU_W
 from .utils import current_measure_text, draw_text
+from .utils import to_visual_coords
 
 
 def draw_preview(canvas, state):
+
+    base_w = state.base_width
+    base_h = state.base_height
 
     if not state.config.draw_live:
         return
@@ -15,16 +19,28 @@ def draw_preview(canvas, state):
 
     x1, y1 = state.points[0]
 
+    # Punto 1 siempre es base → convertir
+    x1, y1 = to_visual_coords(
+        x1, y1,
+        state.base_width,
+        state.base_height,
+        state.rotation
+    )
+
     if len(state.points) == 2:
+        # Punto 2 también base → convertir
         x2, y2 = state.points[1]
+        x2, y2 = to_visual_coords(
+            x2, y2,
+            state.base_width,
+            state.base_height,
+            state.rotation
+        )
     else:
+        # Cursor ya está en visual
         cx, cy = state.cursor_pos
         x2 = cx - LEFT_MENU_W
         y2 = cy
-
-    # Ajustar desplazamiento para canvas
-    x1 += LEFT_MENU_W
-    x2 += LEFT_MENU_W
 
     if state.mode == "DIS":
         cv2.line(canvas, (x1, y1), (x2, y2),

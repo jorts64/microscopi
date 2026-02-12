@@ -33,6 +33,8 @@ from .video import VideoSource
 from .dialogs import ask_string, show_error
 from .renderer import render
 from .preview import draw_preview
+from .user_config import load_user_config, save_user_config
+from .utils import to_base_coords
 
 # ================= CONSTANTES =================
 WINDOW_NAME = f"Microscopi {VERSION}"
@@ -42,7 +44,7 @@ WINDOW_NAME = f"Microscopi {VERSION}"
 def parse_args():
     parser = argparse.ArgumentParser(prog="microscopi")
 
-    parser.add_argument("-d", "--device", type=int, default=2)
+    parser.add_argument("-d", "--device", type=int)
     parser.add_argument("-r", "--resolution", type=str)
     parser.add_argument("-n", "--decimals", type=int, default=3)
     parser.add_argument("--unit", choices=["mm", "in"], default="mm")
@@ -151,6 +153,15 @@ def mouse(event, x, y, flags, state):
         px = x - LEFT_MENU_W
         py = y
 
+        # Convertir coordenadas visuales a base
+        px, py = to_base_coords(
+            px,
+            py,
+            state.base_width,
+            state.base_height,
+            state.rotation
+        )
+
         if state.mode == "XY":
             state.points = [(px, py)]
             state.status_message = _("Point selected")
@@ -168,6 +179,33 @@ def mouse(event, x, y, flags, state):
 
 def main():
     config = parse_args()
+
+    user_conf = load_user_config()
+
+    # --- Resolver video_device ---
+    if config.video_device is not None:
+        final_device = config.video_device
+    elif "video_device" in user_conf:
+        final_device = user_conf["video_device"]
+    else:
+        final_device = 2  # default seguro
+
+    # --- Resolver resolución ---
+    if config.width and config.height:
+        final_width = config.width
+        final_height = config.height
+    elif "resolution" in user_conf:
+        final_width = user_conf["resolution"]["width"]
+        final_height = user_conf["resolution"]["height"]
+    else:
+        final_width = 1920
+        final_height = 1080
+
+    # Aplicar al config
+    config.video_device = final_device
+    config.width = final_width
+    config.height = final_height
+
     state = AppState(config)
 
     try:
@@ -183,6 +221,15 @@ def main():
             _("Cannot open video device") + f" {config.video_device}"
         )
         return
+
+    # Guardar configuración válida
+    save_user_config({
+        "video_device": config.video_device,
+        "resolution": {
+            "width": config.width,
+            "height": config.height
+        }
+    })
 
     cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
     cv2.setMouseCallback(WINDOW_NAME, mouse, state)
@@ -200,10 +247,12 @@ def main():
             )
             video.release()
             return
+
+        # Guardar dimensiones base si aún no están
+        if not hasattr(state, "base_width"):
+            state.base_height, state.base_width = frame.shape[:2]
             
         canvas = render(frame, state)
-
-        draw_preview(canvas, state)
 
         state.last_frame = canvas.copy()
         cv2.imshow(WINDOW_NAME, canvas)
