@@ -3,7 +3,7 @@ microscopi (0.10.0-1) unstable; urgency=medium
   * Development version.
   * Internal refactor (state module separation).
 
- -- Jordi Orts <jorts64@users.noreply.github.com>   Thu, 12 Feb 2026 08:39:49 +0100
+ -- Jordi Orts <jorts64@users.noreply.github.com>  Thu, 12 Feb 2026 08:39:49 +0100
 
 microscopi (0.9.0-1) unstable; urgency=medium
 
