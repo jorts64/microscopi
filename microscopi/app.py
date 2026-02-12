@@ -9,13 +9,14 @@ import csv
 
 from microscopi.config import Config
 from microscopi.i18n import _
+from microscopi.state import AppState
 
 # ================= CONSTANTES =================
 LEFT_MENU_W = 120
 RIGHT_PANEL_W = 300
 BOTTOM_PANEL_H = 60
 MM_PER_INCH = 25.4
-VERSION = "0.9.0"
+VERSION = "0.10.0-dev"
 WINDOW_NAME = f"Microscopi {VERSION}"
 
 # ---- CAMBIO ÚNICO: FreeType para UTF-8 ----
@@ -76,36 +77,6 @@ def parse_args():
         default_unit=args.unit,
         draw_live=not args.no_draw_live,
     )
-
-# ================= ESTADO =================
-
-class AppState:
-    def __init__(self, config):
-        self.config = config
-
-        self.points = []
-        self.mode = "DIS"
-        self.gray = False
-        self.rotation = 0
-
-        self.scale_mm_per_pixel = None
-        self.current_unit = config.default_unit
-        self.calibration_unit = "mm"
-
-        self.measure_color = (0, 255, 0)
-        self.measure_color_name = "GRN"
-
-        self.measurements = []
-
-        self.cursor_pos = None
-        self.last_frame = None
-        self.quit = False
-
-        self.status_message = ""
-        self.input_mode = None
-        self.input_buffer = ""
-
-        self.origin = None  # Coordenada origen en píxeles
 
 # ================= UTILIDADES =================
 
