@@ -1,9 +1,9 @@
 # Microscopi
 
-![GitHub release](https://img.shields.io/github/v/release/jorts64/microscopi)  
-![License](https://img.shields.io/badge/license-MIT-green)  
-![Debian](https://img.shields.io/badge/Debian-13%20Trixie-red)  
-![Python](https://img.shields.io/badge/python-3.11%2B-blue)  
+![GitHub release](https://img.shields.io/github/v/release/jorts64/microscopi)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Debian](https://img.shields.io/badge/Debian-13%20Trixie-red)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)
 
 ![](microscopi.png)
@@ -12,7 +12,7 @@
 
 It provides real-time calibrated measurement, coordinate export and PCB-oriented workflows using any V4L2 compatible camera (USB microscopes, webcams, etc.).
 
-Designed for precision work in electronics, mechanical prototyping and laboratory environments.
+Designed for precision work in electronics, PCB reverse engineering, mechanical prototyping and laboratory environments.
 
 ---
 
@@ -31,6 +31,7 @@ Designed for precision work in electronics, mechanical prototyping and laborator
 - Display units: mm, inch, mil (thousandth of an inch)  
 - Configurable precision (0.0 / 0.00 / 0.000)  
 - Define custom origin (0,0)  
+- Keyboard shortcut **B** for fast calibration  
 
 ### 🔄 Rotation
 
@@ -42,16 +43,32 @@ Designed for precision work in electronics, mechanical prototyping and laborator
 
 - Optional grayscale mode (image only, overlays remain in color)  
 - Persistent overlays with visibility toggle  
+- JSON-based measurement editor (key **M**)  
 - UTF-8 text rendering (OpenCV FreeType)  
 - Real-time preview while measuring  
+- High-contrast dual crosshair cursor  
 
 ### ⌨ Keyboard Shortcuts
 
 - **D / C / S / X** → measurement modes  
 - **R** → rotate  
 - **G** → grayscale toggle  
+- **B** → calibrate  
+- **M** → JSON measure editor  
 - **Z** → undo  
 - **V / U** → unit switching  
+
+### 🧾 JSON Measure Editor
+
+Press **M** to open the full measurement editor.
+
+- Edit labels  
+- Modify colors  
+- Reorder measures  
+- Delete or duplicate measures  
+- Full structural validation before applying changes  
+
+This enables advanced workflows and precise manual adjustments.
 
 ### 💾 Persistence
 
@@ -94,30 +111,26 @@ If OpenCV was built without FreeType support, the program will not start.
 
 ## Installation
 
-### Debian / Ubuntu
+### Debian / Ubuntu (Recommended)
 
-Download the `.deb` from Releases and install:
+Download the latest `.deb` package from **Releases** and install:
 
-    sudo dpkg -i microscopi_0.11.1-1_amd64.deb
+    sudo dpkg -i microscopi_0.12.0-1_amd64.deb
     sudo apt -f install
 
-### From source
+After installation, launch Microscopi from:
 
-    pip install .
+- Application menu  
+or  
+- Terminal:
+
+    microscopi
 
 ---
 
-## 🚀 Running
+## ⚙ Command Line Options
 
-Basic usage:
-
-    python3 -m microscopi
-
-With custom parameters:
-
-    python3 -m microscopi -d 2 -r 1280x720 -n 2 --unit mm
-
-### Command line options
+Microscopi can optionally be started with custom parameters:
 
 | Option | Description |
 |--------|------------|
@@ -138,7 +151,8 @@ If no device or resolution is specified, Microscopi will use the last working co
 3. Select measurement mode (DIS / RAD / SQR / XY).  
 4. Add measurement with label.  
 5. Optionally define origin (0,0).  
-6. Export using PNG / 3D / PCB.  
+6. Edit measurements (M) if needed.  
+7. Export using PNG / 3D / PCB.  
 
 ---
 
@@ -177,15 +191,16 @@ Coordinates are:
 
 ---
 
-## 🧱 Architecture (0.11.x)
+## 🧱 Architecture
 
-Microscopi 0.11 introduced a modular architecture:
+Microscopi uses a modular architecture:
 
 - `video.py` → video source abstraction  
 - `renderer.py` → rendering pipeline  
 - `preview.py` → live preview layer  
 - `state.py` → application model  
 - `actions.py` → measurement and export logic  
+- `input.py` → mouse and keyboard handling  
 
 Rendering separates:
 
@@ -214,7 +229,7 @@ MIT License
 - [x] i18n  
 - [x] CSV export  
 - [x] Geometrically consistent rotation  
-- [ ] Measurement editing  
+- [x] JSON measurement editor  
 - [ ] Hardware profile presets  
 - [ ] Session save/load  
 - [ ] Debian official submission  
