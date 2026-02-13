@@ -20,6 +20,7 @@ BUTTONS = [
     "ADD", "UNDO",
     "RED", "GRN", "BLU", "YEL",
     "0.0", "0.00", "0.000",
+    "GRID",
     "GRY",
     "PNG", "(0,0)", "3D", "PCB",
     "QUIT",

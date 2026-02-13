@@ -134,6 +134,13 @@ def _handle_menu_command(cmd, state):
     elif cmd == "GRY":
         state.gray = not state.gray
 
+    elif cmd == "GRID":
+        if state.scale_mm_per_pixel is None:
+            state.status_message = _("Calibrate first")
+        else:
+            state.grid_enabled = not state.grid_enabled
+            state.status_message = _("Grid ON") if state.grid_enabled else _("Grid OFF")
+
     elif cmd == "ROT":
         state.rotation = (state.rotation + 90) % 360
 

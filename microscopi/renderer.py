@@ -138,6 +138,8 @@ def render(frame, state):
 
     _draw_saved_measures(frame, state)
 
+    _draw_grid(frame, state)
+
     _draw_origin(frame, state) 
 
     draw_preview(frame, state)
@@ -147,3 +149,45 @@ def render(frame, state):
     _draw_cursor(canvas, state)
 
     return canvas
+
+
+from .utils import to_visual_coords
+import cv2
+
+def _draw_grid(frame, state):
+
+    if not state.grid_enabled:
+        return
+
+    if state.scale_mm_per_pixel is None:
+        return
+
+    base_w = state.base_width
+    base_h = state.base_height
+
+    # Paso: 0.1 pulgadas → mm
+    step_mm = 0.1 * 25.4
+
+    # Convertir mm → píxeles base
+    step_px = int(step_mm / state.scale_mm_per_pixel)
+
+    if step_px <= 0:
+        return
+
+    color = (0, 0, 255)  # rojo
+
+    # Líneas verticales
+    x = 0
+    while x < base_w:
+        x1, y1 = to_visual_coords(x, 0, base_w, base_h, state.rotation)
+        x2, y2 = to_visual_coords(x, base_h, base_w, base_h, state.rotation)
+        cv2.line(frame, (x1, y1), (x2, y2), color, 1)
+        x += step_px
+
+    # Líneas horizontales
+    y = 0
+    while y < base_h:
+        x1, y1 = to_visual_coords(0, y, base_w, base_h, state.rotation)
+        x2, y2 = to_visual_coords(base_w, y, base_w, base_h, state.rotation)
+        cv2.line(frame, (x1, y1), (x2, y2), color, 1)
+        y += step_px

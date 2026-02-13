@@ -27,3 +27,5 @@ class AppState:
         self.input_buffer = ""
 
         self.origin = None  # Coordenada origen en píxeles
+
+        self.grid_enabled = False
