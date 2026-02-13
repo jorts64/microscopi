@@ -1,5 +1,5 @@
 import cv2
-from .constants import LEFT_MENU_W, RIGHT_PANEL_W
+from .constants import LEFT_MENU_W, RIGHT_PANEL_W, COLOR_MAP
 from .ui import hit_menu
 from .actions import (
     calibrate_with_value,
@@ -106,6 +106,10 @@ def _handle_menu_command(cmd, state):
 
     elif cmd == "UNDO":
         undo_measure(state)
+
+    elif cmd in COLOR_MAP:
+        state.measure_color = COLOR_MAP[cmd]
+        state.measure_color_name = cmd
 
     elif cmd == "GRY":
         state.gray = not state.gray
