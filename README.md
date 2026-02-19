@@ -95,15 +95,13 @@ CSV export includes:
 
 ---
 
----
-
 ## 🔬 Tested Hardware Matrix
 
 Microscopi has been tested with the following devices and configurations.
 
 | Device | Type | Connection | Status | Notes |
 |--------|------|------------|--------|-------|
-| eMPIA Technology, Inc. Digital Microscope | USB microscope | V4L2 | ✔ Fully functional | Resolution control supported |
+| Chronos USB 2.0 Digital Microscope | USB microscope | V4L2 | ✔ Fully functional | Resolution control supported |
 | Silicon Motion 300k Pixel Camera | USB camera | V4L2 | ✔ Fully functional | Low native resolution |
 | ESP32-CAM (CameraWebServer example) | Embedded WiFi camera | HTTP MJPEG | ✔ Fully functional | Resolution set in firmware |
 | Android phone (IP Webcam app) | Smartphone camera | HTTP MJPEG | ✔ Fully functional | 1280×720 or higher recommended |
@@ -144,6 +142,8 @@ Resolution is controlled by the stream source.
 
 Additional compatibility reports are welcome.  
 If you successfully test Microscopi with new hardware, please share details in the **Hardware compatibility** discussions.
+
+---
 
 
 ## 📦 Dependencies (Debian)
