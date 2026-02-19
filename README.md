@@ -103,7 +103,7 @@ Microscopi has been tested with the following devices and configurations.
 |--------|------|------------|--------|-------|
 | Chronos USB 2.0 Digital Microscope | USB microscope | V4L2 | ✔ Fully functional | Max. resolution 1280x1024 |
 | U6064 5MP OV5648 Auto Focus USB Camera Module | USB camera | V4L2 | ✔ Fully functional | Max. resolution 1600x1200 |
-| ESP32-CAM (CameraWebServer example) | Embedded WiFi camera | HTTP MJPEG | ✔ Fully functional | Resolution set in firmware |
+| ESP32-CAM (CameraWebServer example) | Embedded WiFi camera | HTTP MJPEG | ✔ Fully functional | Max. resolution 1600x1200 |
 | Android phone (IP Webcam app) | Smartphone camera | HTTP MJPEG | ✔ Fully functional | 1280×720 or higher recommended |
 
 ---
