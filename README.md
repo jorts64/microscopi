@@ -16,6 +16,9 @@ Designed for precision work in electronics, PCB reverse engineering, mechanical 
 
 ---
 
+
+
+
 ## ✨ Features
 
 ### 📐 Measurement Modes
@@ -91,6 +94,57 @@ CSV export includes:
 - Measured value  
 
 ---
+
+---
+
+## 🔬 Tested Hardware Matrix
+
+Microscopi has been tested with the following devices and configurations.
+
+| Device | Type | Connection | Status | Notes |
+|--------|------|------------|--------|-------|
+| eMPIA Technology, Inc. Digital Microscope | USB microscope | V4L2 | ✔ Fully functional | Resolution control supported |
+| Silicon Motion 300k Pixel Camera | USB camera | V4L2 | ✔ Fully functional | Low native resolution |
+| ESP32-CAM (CameraWebServer example) | Embedded WiFi camera | HTTP MJPEG | ✔ Fully functional | Resolution set in firmware |
+| Android phone (IP Webcam app) | Smartphone camera | HTTP MJPEG | ✔ Fully functional | 1280×720 or higher recommended |
+
+---
+
+### USB Devices (V4L2)
+
+Standard V4L2-compatible USB microscopes and webcams are supported.
+
+Resolution can be controlled via command line:
+
+    microscopi -d 2 -r 1280x720
+
+---
+
+### Network Cameras (HTTP / MJPEG)
+
+Microscopi supports MJPEG streams via HTTP, including:
+
+- ESP32-CAM
+- Android IP Webcam
+- IP cameras with MJPEG endpoints
+
+Example:
+
+    microscopi -d http://192.168.1.120:8080/video
+
+Resolution is controlled by the stream source.
+
+---
+
+### Notes
+
+- OpenCV must be built with FFMPEG support for HTTP/RTSP streams.
+- Higher resolutions improve calibration accuracy.
+- Network latency depends on WiFi and device performance.
+
+Additional compatibility reports are welcome.  
+If you successfully test Microscopi with new hardware, please share details in the **Hardware compatibility** discussions.
+
 
 ## 📦 Dependencies (Debian)
 
