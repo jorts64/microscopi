@@ -1,4 +1,10 @@
-microscopi (0.12.0-2) unstable; urgency=medium
+microscopi (0.14.0-1) unstable; urgency=medium
+
+  * Added support for web stream devices
+
+ -- Jordi Orts <jorts64@users.noreply.github.com>  Thu, 19 Feb 2026 08:40:33 +0100
+
+microscopi (0.13.0-1) unstable; urgency=medium
 
     * Add calibrated 0.1 inch GRID overlay (toggle button)
 

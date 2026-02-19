@@ -45,7 +45,7 @@ WINDOW_NAME = f"Microscopi {VERSION}"
 def parse_args():
     parser = argparse.ArgumentParser(prog="microscopi")
 
-    parser.add_argument("-d", "--device", type=int)
+    parser.add_argument("-d", "--device", type=str, default=None)
     parser.add_argument("-r", "--resolution", type=str)
     parser.add_argument("-n", "--decimals", type=int, default=3)
     parser.add_argument("--unit", choices=["mm", "in"], default="mm")
@@ -57,8 +57,13 @@ def parse_args():
     if args.resolution:
         width, height = map(int, args.resolution.lower().split("x"))
 
+    if args.device is not None and args.device.isdigit():
+        device = int(args.device)
+    else:
+        device = args.device
+
     return Config(
-        video_device=args.device,
+        video_device=device,
         width=width,
         height=height,
         decimals=args.decimals,
