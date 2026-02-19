@@ -1,3 +1,9 @@
+microscopi (0.12.0-2) unstable; urgency=medium
+
+    * Add calibrated 0.1 inch GRID overlay (toggle button)
+
+ -- Jordi Orts <jorts64@users.noreply.github.com>  Thu, 19 Feb 2026 07:20:51 +0100
+
 microscopi (0.12.0-1) unstable; urgency=medium
 
   * Refactored mouse handling into dedicated input module.
